@@ -4,7 +4,15 @@
   "enterMail": "Enter your Email and Password",
   "email": "Email",
   "password": "Password",
-  "signin": "Sign In"
+  "signin": "Sign In",
+  "registerYourAccount": "Register your account",
+  "getStarteWithYourDetails": "Get Started with your details",
+  "signUp": "Sign Up",
+  "firstName": "FirstName",
+  "lastName": "Last Name",
+  "phone": "Phone",
+  "deliveryAddress": "Delivery Address"
+
 
 
 }

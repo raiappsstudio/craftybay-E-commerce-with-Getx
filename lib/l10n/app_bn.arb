@@ -4,5 +4,17 @@
       "enterMail": "আপনার ইমেইল এবং পাসওয়ার্ড লিখুন",
       "email": "ইমেল",
       "password": "পাসওয়ার্ড",
-      "signin": "সাইন ইন"
+      "signin": "সাইন ইন",
+      "registerYourAccount": "আপনার অ্যাকাউন্ট নিবন্ধন করুন",
+      "getStarteWithYourDetails": "আপনার বিবরণ দিয়ে শুরু করুন",
+      "signUp": "Sign Up",
+      "firstName": "FirstName",
+      "lastName": "Last Name",
+      "phone": "Phone",
+      "deliveryAddress": "Delivery Address"
+
+
+
+
+
 }

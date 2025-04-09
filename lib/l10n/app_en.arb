@@ -11,7 +11,12 @@
   "firstName": "FirstName",
   "lastName": "Last Name",
   "phone": "Phone",
-  "deliveryAddress": "Delivery Address"
+  "deliveryAddress": "Delivery Address",
+  "seeAll": "See All",
+  "categorys": "Categorys",
+  "popular": "Popular",
+  "snew": "New",
+  "special": "Special"
 
 
 

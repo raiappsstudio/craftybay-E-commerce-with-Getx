@@ -11,7 +11,13 @@
       "firstName": "FirstName",
       "lastName": "Last Name",
       "phone": "Phone",
-      "deliveryAddress": "Delivery Address"
+      "deliveryAddress": "Delivery Address",
+      "seeAll": "সব গুলা",
+      "categorys": "কাটেগরি",
+      "popular": "পপুলার",
+      "snew": "নতুন",
+      "special": "স্পেশাল"
+
 
 
 

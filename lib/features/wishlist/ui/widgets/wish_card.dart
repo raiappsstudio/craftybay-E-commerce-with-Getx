@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import '../../../../app/app_colors.dart';
+import '../../../../app/assets_path.dart';
 
-import '../../../app/app_colors.dart';
-import '../../../app/assets_path.dart';
 
-class ProductCard extends StatelessWidget {
-  const ProductCard({
+class WishCard extends StatelessWidget {
+  const WishCard({
     super.key,
   });
 
@@ -33,7 +33,7 @@ class ProductCard extends StatelessWidget {
               padding: EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  Text(
+                  const Text(
                     'Nike Nk 76 - new Collection',
                     maxLines: 1,
                     style: TextStyle(overflow: TextOverflow.ellipsis, fontWeight: FontWeight.w600),
@@ -42,12 +42,12 @@ class ProductCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('\$ 45',
+                      const Text('\$ 45',
                         style: TextStyle(
                             color: AppColors.themeColor,
                             fontWeight: FontWeight.w600),),
 
-                      Wrap(children: [
+                      const Wrap(children: [
                         Icon(Icons.star,size: 18, color: Colors.orange,),
                         Text('4.6')
                       ],),
@@ -57,9 +57,9 @@ class ProductCard extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(2)
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: Icon(Icons.favorite_border,size: 14,color: Colors.white,),
+                        child: const Padding(
+                          padding: EdgeInsets.all(2.0),
+                          child: Icon(Icons.delete,size: 14,color: Colors.white,),
                         ),
                       )
 

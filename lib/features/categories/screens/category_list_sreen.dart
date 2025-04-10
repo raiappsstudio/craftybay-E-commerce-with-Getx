@@ -1,4 +1,4 @@
-import 'package:craftybay/features/auth/ui/widgets/category_item.dart';
+import 'package:craftybay/features/common/widgets/category_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';

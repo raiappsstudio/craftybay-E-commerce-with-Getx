@@ -214,7 +214,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
       if (isSuccess) {
         showSnackBarMessage(context, 'SignUp Successfully!!');
-        Navigator.pushNamed(context, VerifyOtpScreen.name);
+        //why not working this code
+        //Navigator.pushNamed(context, VerifyOtpScreen(email: signUpModel.email).name);
+        Get.to(() => VerifyOtpScreen(email: signUpModel.email));
+
+
       } else {
         showSnackBarMessage(context, signUpController.errorMessage!, true);
       }

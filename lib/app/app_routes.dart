@@ -46,7 +46,8 @@ class AppRoutes{
    }else if (settings.name == CreateReviewScreen.name){
      route =  const CreateReviewScreen();
    }else if (settings.name == VerifyOtpScreen.name){
-     route =  const VerifyOtpScreen();
+     String email = settings.arguments as String;
+     route =  VerifyOtpScreen(email: email);
    }
 
    return MaterialPageRoute(builder: (context){

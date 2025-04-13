@@ -4,6 +4,7 @@ import 'package:craftybay/features/wishlist/ui/screens/wish_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../cart/ui/screens/cart_list_screen.dart';
 import '../../../home/ui/screens/home_screen.dart';
 
 class MainBottomNavBarScreen extends StatefulWidget {
@@ -19,7 +20,7 @@ class _MainBottomNavBarScreenState extends State<MainBottomNavBarScreen> {
   final List<Widget> _screens = [
     const HomeScreen(),
     const CategoryListSreen(),
-    const HomeScreen(),
+    const CartListScreen(),
     const WishListScreen(),
   ];
 

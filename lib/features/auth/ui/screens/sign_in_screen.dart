@@ -27,27 +27,19 @@ class _SignInScreenState extends State<SignInScreen> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              const SizedBox(
-                height: 60,
-              ),
+              const SizedBox(height: 60),
               AppLogo(),
-              const SizedBox(
-                height: 24,
-              ),
+              const SizedBox(height: 24),
               Text(
                 context.localization.welcomeBack,
                 style: textTheme.titleLarge,
               ),
-              const SizedBox(
-                height: 8,
-              ),
+              const SizedBox(height: 8),
               Text(
                 context.localization.enterMail,
                 style: const TextStyle(color: Colors.grey, fontSize: 16),
               ),
-              const SizedBox(
-                height: 16,
-              ),
+              const SizedBox(height: 16),
               TextFormField(
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.emailAddress,
@@ -55,18 +47,14 @@ class _SignInScreenState extends State<SignInScreen> {
                   hintText: context.localization.email,
                 ),
               ),
-              const SizedBox(
-                height: 8,
-              ),
+              const SizedBox(height: 8),
               TextFormField(
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
                   hintText: context.localization.password,
                 ),
               ),
-              const SizedBox(
-                height: 16,
-              ),
+              const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
                   FirebaseCrashlytics.instance.log("Entered sign in button");
@@ -77,27 +65,23 @@ class _SignInScreenState extends State<SignInScreen> {
               const SizedBox(height: 24),
 
               //=Rich text=============================================
-              RichText(text:  TextSpan(
-                text: "Don't have an account?",
-                style: const TextStyle(color: Colors.grey,fontWeight: FontWeight.w600),
-                  children: [
-                    TextSpan(text: 'Sign up',
+              RichText(
+                  text: TextSpan(
+                      text: "Don't have an account?",
                       style: const TextStyle(
-                        color: AppColors.themeColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      recognizer: TapGestureRecognizer()..onTap = (){
-                        _onTapSignUpButton();
-                      }
-
-                    ),
-                  ]
-
-              )
-
-              )
-              
-              
+                          color: Colors.grey, fontWeight: FontWeight.w600),
+                      children: [
+                    TextSpan(
+                        text: 'Sign up',
+                        style: const TextStyle(
+                          color: AppColors.themeColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            _onTapSignUpButton();
+                          }),
+                  ]))
             ],
           ),
         ),
@@ -105,10 +89,7 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-
-
-  void _onTapSignUpButton(){
+  void _onTapSignUpButton() {
     Navigator.pushNamed(context, SignUpScreen.name);
   }
-
 }

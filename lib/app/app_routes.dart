@@ -6,8 +6,12 @@ import 'package:craftybay/features/products/ui/screens/product_details_screen.da
 import 'package:flutter/material.dart';
 
 import '../features/auth/ui/screens/sign_up_screen.dart';
+import '../features/auth/ui/screens/verify_otp_screen.dart';
+import '../features/cart/ui/screens/cart_list_screen.dart';
 import '../features/categories/screens/category_list_sreen.dart';
 import '../features/products/ui/screens/product_list_screen.dart';
+import '../features/reviews/ui/screens/create_review_screen.dart';
+import '../features/reviews/ui/screens/reviews_screen.dart';
 import '../features/wishlist/ui/screens/wish_list_screen.dart';
 
 class AppRoutes{
@@ -35,6 +39,14 @@ class AppRoutes{
      route =  ProductListScreen(category: category);
    }else if (settings.name == ProductDetailsScreen.name){
      route =  const ProductDetailsScreen();
+   }else if (settings.name == CartListScreen.name){
+     route =  const CartListScreen();
+   }else if (settings.name == ReviewsScreen.name){
+     route =  const ReviewsScreen();
+   }else if (settings.name == CreateReviewScreen.name){
+     route =  const CreateReviewScreen();
+   }else if (settings.name == VerifyOtpScreen.name){
+     route =  const VerifyOtpScreen();
    }
 
    return MaterialPageRoute(builder: (context){

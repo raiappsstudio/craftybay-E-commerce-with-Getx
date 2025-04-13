@@ -26,7 +26,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
         child: GridView.builder(
             itemCount: 20,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3, mainAxisSpacing: 8, crossAxisSpacing: 0),
+                crossAxisCount: 2, mainAxisSpacing: 8, crossAxisSpacing: 0),
             itemBuilder: (context, index) {
               return FittedBox(child: ProductCard());
             }),

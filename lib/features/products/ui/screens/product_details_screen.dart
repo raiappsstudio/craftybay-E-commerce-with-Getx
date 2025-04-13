@@ -3,6 +3,7 @@ import 'package:craftybay/features/products/ui/widgets/color_picker.dart';
 import 'package:craftybay/features/products/ui/widgets/increament_decrement_button.dart';
 import 'package:craftybay/features/products/ui/widgets/product_image_carousel_slider.dart';
 import 'package:craftybay/features/products/ui/widgets/size_picker.dart';
+import 'package:craftybay/features/reviews/ui/screens/reviews_screen.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -64,7 +65,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                         ),
                                         Text('4.8'),
                                         TextButton(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              Navigator.pushNamed(context, ReviewsScreen.name);
+                                            },
                                             child: const Text('Review')),
 
                                         Card(

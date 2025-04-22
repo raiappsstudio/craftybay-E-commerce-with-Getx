@@ -24,13 +24,13 @@ class CartListItem extends StatelessWidget {
               Text(
                 "New Year Special shoes",
                 style: TextStyle(fontSize: 20),
-                maxLines: 20,
+                maxLines: 20
               ),
               Text(
                 "Color: Red, Size: xl",
               ),
               SizedBox(
-                height: 5,
+                height: 5
               ),
               Text(
                 "\$1000",
@@ -45,10 +45,13 @@ class CartListItem extends StatelessWidget {
           Column(
             children: [
               IconButton(
-                  onPressed: () {}, icon: const Icon(Icons.delete)),
-              IncreamentDecrementButton(onChange: (int value) {
-                print(value);
-              })
+                  onPressed: () {}, icon: const Icon(Icons.delete,size: 36,color: Colors.redAccent,)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: IncreamentDecrementButton(onChange: (int value) {
+                  print(value);
+                }),
+              )
             ],
           )
         ],

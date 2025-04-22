@@ -1,5 +1,6 @@
 import 'package:craftybay/app/app_colors.dart';
 import 'package:craftybay/core/extensions/localization_extension.dart';
+import 'package:craftybay/core/widgets/centered_circular_progressbar.dart';
 import 'package:craftybay/core/widgets/show_snack_bar_message.dart';
 import 'package:craftybay/features/auth/data/models/sign_In_model.dart';
 import 'package:craftybay/features/auth/ui/controllers/sign_in_controller.dart';
@@ -61,6 +62,12 @@ class _SignInScreenState extends State<SignInScreen> {
                   decoration: InputDecoration(
                     hintText: context.localization.email,
                   ),
+                  validator: (String? value) {
+                    if (value?.trim().isEmpty ?? true) {
+                      return "Enter Valid Email";
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 8),
                 TextFormField(
@@ -69,14 +76,26 @@ class _SignInScreenState extends State<SignInScreen> {
                   decoration: InputDecoration(
                     hintText: context.localization.password,
                   ),
+                  validator: (String? value) {
+                    if ((value?.isEmpty ?? true) || value!.length < 6) {
+                      return 'Enter a Password more than 6 letters';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {
-                    _onTapSigninButton();
-                  },
-                  child: Text(context.localization.signin),
-                ),
+                GetBuilder<SignInController>(builder: (controller) {
+                  return Visibility(
+                    visible: controller.inProgress == false,
+                    replacement: CenteredCircularProgressbar(),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        _onTapSigninButton();
+                      },
+                      child: Text(context.localization.signin),
+                    ),
+                  );
+                }),
                 const SizedBox(height: 24),
 
                 //=Rich text=============================================
@@ -107,22 +126,23 @@ class _SignInScreenState extends State<SignInScreen> {
 
   Future<void> _onTapSigninButton() async {
     if (_formKey.currentState!.validate()) {
-      SignInRequestModel signInRequestModel = SignInRequestModel(
-          email: _emailTextController.text.trim(),
-          password: _passwordTextController.text);
+      final signInRequestModel = SignInRequestModel(
+        email: _emailTextController.text.trim(),
+        password: _passwordTextController.text,
+      );
 
-      final bool isSuccess = await _signInController.signIn(signInRequestModel);
+      final isSuccess = await _signInController.signIn(signInRequestModel);
 
       if (isSuccess) {
-        Navigator.pushNamedAndRemoveUntil(
-            context, MainBottomNavBarScreen.name, (predicate) => false);
+        showSnackBarMessage(context, "Sign In Successfully");
+        Navigator.pushNamedAndRemoveUntil(context, MainBottomNavBarScreen.name, (value) => false,
+        );
       } else {
-        showSnackBarMessage(context, _signInController.errorMessage!, true);
+        showSnackBarMessage(
+            context, _signInController.errorMessage ?? "Sign in failed", true);
       }
     }
   }
-
-  Future<void> _onTapSignInButton() async {}
 
   void _onTapSignUpButton() {
     Navigator.pushNamed(context, SignUpScreen.name);

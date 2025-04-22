@@ -2,7 +2,9 @@ import 'package:craftybay/core/network_caller/network_caller.dart';
 import 'package:craftybay/features/auth/ui/controllers/sign_in_controller.dart';
 import 'package:craftybay/features/auth/ui/controllers/sign_up_controller.dart';
 import 'package:craftybay/features/auth/ui/controllers/verify_otp_controller.dart';
+import 'package:craftybay/features/categories/controller/category_controller.dart';
 import 'package:craftybay/features/common/controllers/main_bottom_nav_bar_controller.dart';
+import 'package:craftybay/features/common/controllers/home_slider_controller.dart';
 import 'package:get/get.dart';
 
 class ControllerBinder extends Bindings {
@@ -10,9 +12,11 @@ class ControllerBinder extends Bindings {
   void dependencies() {
     Get.put(MainBottomNavBarController());
     Get.put(NetworkCaller());
-    Get.put(SignInController);
+    Get.put(CategoryController());
+    Get.put(SignInController());
     Get.put(SignUpController());
     Get.put(VerifyOtpController());
+    Get.put(HomeSliderController());
    // Get.put(()=> VerifyOtpController());//laze put
   }
 }

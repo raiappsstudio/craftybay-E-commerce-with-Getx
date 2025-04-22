@@ -38,4 +38,16 @@ class CategoryItems extends StatelessWidget {
       ),
     );
   }
+
+
+  Future<void> _getCategory () async{
+
+
+
+
+  }
+
+
+
+
 }

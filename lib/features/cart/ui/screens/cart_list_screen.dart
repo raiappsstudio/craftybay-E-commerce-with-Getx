@@ -16,21 +16,24 @@ class _CartListScreenState extends State<CartListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cart List'),
+        title: const Text('Cart List'),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-                itemCount: 5,
-                itemBuilder: (context, index){
-              return CartListItem();
-            }),
-          ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                  itemCount: 5,
+                  itemBuilder: (context, index){
+                return const FittedBox(child:CartListItem());
+              }),
+            ),
 
-          _buildCartCheckOut()
+            _buildCartCheckOut()
 
-        ],
+          ],
+        ),
       ),
     );
   }

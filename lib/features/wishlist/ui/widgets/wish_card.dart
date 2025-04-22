@@ -13,12 +13,12 @@ class WishCard extends StatelessWidget {
     return Card(
       color: Colors.white,
       child: SizedBox(
-        width: 140,
+        width: 180,
         child: Column(
           children: [
             Container(
               height: 120,
-              width: 140,
+              width: 180,
               decoration: BoxDecoration(
                   color: AppColors.themeColor.withOpacity(0.1),
                   borderRadius: const BorderRadius.only(

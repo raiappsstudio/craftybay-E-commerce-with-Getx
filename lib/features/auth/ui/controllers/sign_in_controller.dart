@@ -22,17 +22,19 @@ class SignInController extends GetxController {
     update();
 
     final NetworkResponse response = await Get.find<NetworkCaller>()
-        .postRequest(url: AppUrls.signUpUrl, body: signInRequestModel.tojson());
+        .postRequest(url: AppUrls.signinUrl, body: signInRequestModel.tojson());
 
     if (response.isSuccess) {
+      _inprogress = false;
+      update();
       _errorMessage = null;
       isSuccess = true;
       //Save user data
-      UserModel userModel = UserModel.fromJson(response.responseData!['data']['user']);
+      UserModel userModel =
+          UserModel.fromJson(response.responseData!['data']['user']);
       //save User Token
       String accessToken = response.responseData!['data']['token'];
       Get.find<AuthController>().saveUserData(accessToken, userModel);
-
 
     } else {
       _errorMessage = response.errorMessage;

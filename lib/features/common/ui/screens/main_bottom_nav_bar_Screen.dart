@@ -1,3 +1,4 @@
+import 'package:craftybay/features/categories/controller/category_controller.dart';
 import 'package:craftybay/features/categories/screens/category_list_sreen.dart';
 import 'package:craftybay/features/common/controllers/main_bottom_nav_bar_controller.dart';
 import 'package:craftybay/features/common/controllers/home_slider_controller.dart';
@@ -29,6 +30,7 @@ class _MainBottomNavBarScreenState extends State<MainBottomNavBarScreen> {
   void initState() {
     super.initState();
     Get.find<HomeSliderController>().getSliders();
+    Get.find<CategoryController>().getCategoryList();
   }
 
 

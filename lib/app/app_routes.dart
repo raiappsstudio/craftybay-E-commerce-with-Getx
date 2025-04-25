@@ -1,5 +1,6 @@
 import 'package:craftybay/features/auth/ui/screens/sign_in_screen.dart';
 import 'package:craftybay/features/auth/ui/screens/splash_screen.dart';
+import 'package:craftybay/features/categories/model/category_model.dart';
 import 'package:craftybay/features/common/ui/screens/main_bottom_nav_bar_Screen.dart';
 import 'package:craftybay/features/home/ui/screens/home_screen.dart';
 import 'package:craftybay/features/products/ui/screens/product_details_screen.dart';
@@ -35,7 +36,7 @@ class AppRoutes{
    }else if (settings.name == CategoryListSreen.name){
      route = const CategoryListSreen();
    }else if (settings.name == ProductListScreen.name){
-     final String category = settings.arguments as String;
+     final category = settings.arguments as CategoryModel;
      route =  ProductListScreen(category: category);
    }else if (settings.name == ProductDetailsScreen.name){
      route =  const ProductDetailsScreen();

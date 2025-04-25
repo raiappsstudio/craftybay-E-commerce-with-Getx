@@ -20,8 +20,15 @@ class NetworkCaller {
   final Logger _logger = Logger();
 
   ///Data niye aschi=====================
-  Future<NetworkResponse> getRequest({required String url}) async {
+  Future<NetworkResponse> getRequest(
+      {required String url, Map<String, dynamic>? queryParams}) async {
     try {
+      url += '?';
+
+      for (String key in queryParams?.keys ?? {}) {
+        url += '$key=${queryParams![key]}&';
+      }
+
       Uri uri = Uri.parse(url);
       Map<String, String> headers = {'token': ''};
 
@@ -31,17 +38,21 @@ class NetworkCaller {
 
       final decodedResponse = jsonDecode(response.body);
 
-      if (response.statusCode == 200|| response.statusCode == 201) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         return NetworkResponse(
             isSuccess: true,
             statusCode: response.statusCode,
             responseData: decodedResponse);
       } else if (response.statusCode == 401) {
         return NetworkResponse(
-            isSuccess: false, statusCode: response.statusCode,errorMessage: decodedResponse['msg']);
+            isSuccess: false,
+            statusCode: response.statusCode,
+            errorMessage: decodedResponse['msg']);
       } else {
         return NetworkResponse(
-            isSuccess: false, statusCode: response.statusCode,errorMessage: decodedResponse['msg']);
+            isSuccess: false,
+            statusCode: response.statusCode,
+            errorMessage: decodedResponse['msg']);
       }
     } catch (e) {
       return NetworkResponse(
@@ -115,17 +126,21 @@ class NetworkCaller {
       _logResponse(url, response);
       final decodedResponse = jsonDecode(response.body);
 
-      if (response.statusCode == 200||response.statusCode == 201) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         return NetworkResponse(
             isSuccess: true,
             statusCode: response.statusCode,
             responseData: decodedResponse);
       } else if (response.statusCode == 401) {
         return NetworkResponse(
-            isSuccess: false, statusCode: response.statusCode,errorMessage: decodedResponse['msg']);
+            isSuccess: false,
+            statusCode: response.statusCode,
+            errorMessage: decodedResponse['msg']);
       } else {
         return NetworkResponse(
-            isSuccess: false, statusCode: response.statusCode,errorMessage: decodedResponse['msg']);
+            isSuccess: false,
+            statusCode: response.statusCode,
+            errorMessage: decodedResponse['msg']);
       }
     } catch (e) {
       return NetworkResponse(
@@ -152,17 +167,21 @@ class NetworkCaller {
           await patch(uri, headers: headers, body: jsonEncode(body));
       _logResponse(url, response);
       final decodedResponse = jsonDecode(response.body);
-      if (response.statusCode == 200||response.statusCode == 201) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         return NetworkResponse(
             isSuccess: true,
             statusCode: response.statusCode,
             responseData: decodedResponse);
       } else if (response.statusCode == 401) {
         return NetworkResponse(
-            isSuccess: false, statusCode: response.statusCode,errorMessage: decodedResponse['msg']);
+            isSuccess: false,
+            statusCode: response.statusCode,
+            errorMessage: decodedResponse['msg']);
       } else {
         return NetworkResponse(
-            isSuccess: false, statusCode: response.statusCode,errorMessage: decodedResponse['msg']);
+            isSuccess: false,
+            statusCode: response.statusCode,
+            errorMessage: decodedResponse['msg']);
       }
     } catch (e) {
       return NetworkResponse(
@@ -193,17 +212,21 @@ class NetworkCaller {
       _logResponse(url, response);
       final decodedResponse = jsonDecode(response.body);
 
-      if (response.statusCode == 200||response.statusCode == 201) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         return NetworkResponse(
             isSuccess: true,
             statusCode: response.statusCode,
             responseData: decodedResponse);
       } else if (response.statusCode == 401) {
         return NetworkResponse(
-            isSuccess: false, statusCode: response.statusCode,errorMessage: decodedResponse['msg']);
+            isSuccess: false,
+            statusCode: response.statusCode,
+            errorMessage: decodedResponse['msg']);
       } else {
         return NetworkResponse(
-            isSuccess: false, statusCode: response.statusCode, errorMessage: decodedResponse['msg']);
+            isSuccess: false,
+            statusCode: response.statusCode,
+            errorMessage: decodedResponse['msg']);
       }
     } catch (e) {
       return NetworkResponse(

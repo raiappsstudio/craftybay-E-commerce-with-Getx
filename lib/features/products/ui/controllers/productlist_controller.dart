@@ -1,35 +1,35 @@
-import 'package:craftybay/features/categories/model/category_model.dart';
+
 import 'package:get/get.dart';
+import '../../../../app/app_urls.dart';
+import '../../../../core/network_caller/network_caller.dart';
+import '../../data/models/product_model.dart';
 
-import '../../../app/app_urls.dart';
-import '../../../core/network_caller/network_caller.dart';
-
-class CategoryController extends GetxController {
-  final int _perPageDataCount = 15;
+class ProductListController extends GetxController {
+  final int _perPageDataCount = 30;
 
   int _currentPage = 0;
 
   int? _totalPage;
 
-  int? get totalPage => _totalPage;
-
   bool _isInitialLoading = true;
-
-  bool get isInitialLoading => _isInitialLoading;
 
   bool _isLoading = false;
 
-  bool get isLoading => _isLoading;
-
-  List<CategoryModel> _categoryList = [];
-
-  List<CategoryModel> get categoryList => _categoryList;
+  List<ProductModel> _productList = [];
 
   String? _errorMessage;
 
   String? get errorMessage => _errorMessage;
 
-  Future<bool> getCategoryList() async {
+  int? get totalPage => _totalPage;
+
+  List<ProductModel> get productList => _productList;
+
+  bool get isLoading => _isLoading;
+
+  bool get isInitialLoading => _isInitialLoading;
+
+  Future<bool> getProductListByCategory(String categoryId) async {
     if (_totalPage != null && _currentPage > _totalPage!) {
       return true;
     }
@@ -40,19 +40,19 @@ class CategoryController extends GetxController {
       _isLoading = true;
     }
     update();
-
     final NetworkResponse response = await Get.find<NetworkCaller>()
-        .getRequest(url: AppUrls.categoriesUrl, queryParams: {
+        .getRequest(url: AppUrls.productUrl, queryParams: {
       'count': _perPageDataCount,
       'page': _currentPage,
+      'category': categoryId,
     });
     if (response.isSuccess) {
-      List<CategoryModel> list = [];
+      List<ProductModel> list = [];
       for (Map<String, dynamic> data in response.responseData!['data']
-          ['results']) {
-        list.add(CategoryModel.fromJson(data));
+      ['results']) {
+        list.add(ProductModel.fromJson(data));
       }
-      _categoryList.addAll(list);
+      _productList.addAll(list);
       _totalPage = response.responseData!['data']['last_page'];
 
       _errorMessage = null;
@@ -72,10 +72,10 @@ class CategoryController extends GetxController {
     return isSuccess;
   }
 
-  Future<bool> refreshList() {
+  Future<bool> refreshList(String categoryId) {
     _currentPage = 0;
-    _categoryList = [];
+    _productList = [];
     _isInitialLoading = true;
-    return getCategoryList();
+    return getProductListByCategory(categoryId);
   }
 }

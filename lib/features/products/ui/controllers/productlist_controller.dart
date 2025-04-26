@@ -39,6 +39,7 @@ class ProductListController extends GetxController {
     if (!_isInitialLoading) {
       _isLoading = true;
     }
+
     update();
     final NetworkResponse response = await Get.find<NetworkCaller>()
         .getRequest(url: AppUrls.productUrl, queryParams: {
@@ -55,7 +56,10 @@ class ProductListController extends GetxController {
       _productList.addAll(list);
       _totalPage = response.responseData!['data']['last_page'];
 
+      _isInitialLoading = false;
+      _isLoading = false;
       _errorMessage = null;
+      update();
       isSuccess = true;
     } else {
       _errorMessage = response.errorMessage;

@@ -44,17 +44,18 @@ class _ProductListScreenState extends State<ProductListScreen> {
       body: GetBuilder(
           init: _productListController,
           builder: (controller) {
-            if (controller.isInitialLoading) {
+           /* if (controller.isInitialLoading) {
               return const CenteredCircularProgressbar();
-            }
+            }*/
 
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Visibility(
-                visible: controller.isInitialLoading == false,
+                visible: controller.isLoading == false,
                 child: Column(
                   children: [
-                    Expanded(
+                    Container(
+                      height: 500,
                       child: GridView.builder(
                         itemCount: controller.productList.length,
                         controller: _scrollController,

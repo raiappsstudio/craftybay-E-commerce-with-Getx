@@ -2,6 +2,9 @@ import 'package:craftybay/features/categories/controller/category_controller.dar
 import 'package:craftybay/features/categories/screens/category_list_sreen.dart';
 import 'package:craftybay/features/common/controllers/main_bottom_nav_bar_controller.dart';
 import 'package:craftybay/features/common/controllers/home_slider_controller.dart';
+import 'package:craftybay/features/products/ui/controllers/popular_new_controller.dart';
+import 'package:craftybay/features/products/ui/controllers/popular_product_controller.dart';
+import 'package:craftybay/features/products/ui/controllers/popular_special_controller.dart';
 import 'package:craftybay/features/wishlist/ui/screens/wish_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,6 +34,9 @@ class _MainBottomNavBarScreenState extends State<MainBottomNavBarScreen> {
     super.initState();
     Get.find<HomeSliderController>().getSliders();
     Get.find<CategoryController>().getCategoryList();
+    Get.find<NewProductController>().getNewProductList();
+    Get.find<SpecialProductController>().getSpecialProductList();
+    Get.find<PopularProductController>().getPopularProductList();
   }
 
 

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 
 class ReviewsItem extends StatelessWidget {
   const ReviewsItem({
-    super.key,
+    super.key, required this.productId,
   });
+
+  final String productId;
+
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,9 @@ class ReviewsItem extends StatelessWidget {
                 ],
               ),
               Text(
-                  ''' reviews are more powerful than ever. Statistics show reviews are more powerful than ever. Statistics show that 95% of consumers now read online reviewsthat 95% of consumers now read online reviews''')
+                  ''' reviews are more powerful than ever. Statistics show reviews ar
+                   more powerful than ever. Statistics show that 95% of consumers now
+                   ead online reviewsthat 95% of consumers now read online reviews''')
             ],
           ),
         ),

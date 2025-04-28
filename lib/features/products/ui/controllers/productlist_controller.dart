@@ -1,33 +1,33 @@
-
 import 'package:get/get.dart';
 import '../../../../app/app_urls.dart';
 import '../../../../core/network_caller/network_caller.dart';
 import '../../data/models/product_model.dart';
 
 class ProductListController extends GetxController {
-  final int _perPageDataCount = 30;
 
+  final int _perPageDataCount = 30;
   int _currentPage = 0;
 
   int? _totalPage;
-
-  bool _isInitialLoading = true;
-
-  bool _isLoading = false;
-
-  List<ProductModel> _productList = [];
-
-  String? _errorMessage;
-
-  String? get errorMessage => _errorMessage;
-
   int? get totalPage => _totalPage;
 
-  List<ProductModel> get productList => _productList;
 
+  bool _isInitialLoading = true;
+  bool get isInitialLoading => _isInitialLoading;
+
+
+  bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  bool get isInitialLoading => _isInitialLoading;
+
+  String? _errorMessage;
+  String? get errorMessage => _errorMessage;
+
+
+  List<ProductModel> _productList = [];
+  List<ProductModel> get productList => _productList;
+
+
 
   Future<bool> getProductListByCategory(String categoryId) async {
     if (_totalPage != null && _currentPage > _totalPage!) {
@@ -47,6 +47,7 @@ class ProductListController extends GetxController {
       'page': _currentPage,
       'category': categoryId,
     });
+
     if (response.isSuccess) {
       List<ProductModel> list = [];
       for (Map<String, dynamic> data in response.responseData!['data']

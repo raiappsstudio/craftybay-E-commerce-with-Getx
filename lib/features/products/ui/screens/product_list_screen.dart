@@ -19,13 +19,13 @@ class ProductListScreen extends StatefulWidget {
 }
 
 class _ProductListScreenState extends State<ProductListScreen> {
-  final ProductListController _productListController = ProductListController();
+  final ProductListController _productListController = Get.put(ProductListController());
   final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    _productListController.getProductListByCategory(widget.category.id);
+    _productListController.refreshList(widget.category.id);
     _scrollController.addListener(_loadData);
   }
 
@@ -44,9 +44,15 @@ class _ProductListScreenState extends State<ProductListScreen> {
       body: GetBuilder(
           init: _productListController,
           builder: (controller) {
-           /* if (controller.isInitialLoading) {
+            if (controller.isInitialLoading) {
               return const CenteredCircularProgressbar();
-            }*/
+            }
+
+            if (controller.errorMessage !=null){
+              return Center(child: Text(controller.errorMessage!));
+
+            }
+
 
             return Padding(
               padding: const EdgeInsets.all(8.0),
@@ -54,16 +60,15 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 visible: controller.isLoading == false,
                 child: Column(
                   children: [
-                    Container(
-                      height: 500,
+                    Expanded(
                       child: GridView.builder(
-                        itemCount: controller.productList.length,
+                        itemCount: controller.productList.length, // <-- use controller, not new instance
                         controller: _scrollController,
-                        gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            mainAxisSpacing: 4,
-                            crossAxisSpacing: 0),
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          mainAxisSpacing: 4,
+                          crossAxisSpacing: 0,
+                        ),
                         itemBuilder: (context, index) {
                           return FittedBox(
                             child: ProductCard(
@@ -72,6 +77,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                           );
                         },
                       ),
+
                     ),
                     Visibility(
                       visible: controller.isLoading,

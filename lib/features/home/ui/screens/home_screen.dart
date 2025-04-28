@@ -4,6 +4,11 @@ import 'package:craftybay/core/widgets/centered_circular_progressbar.dart';
 import 'package:craftybay/features/categories/controller/category_controller.dart';
 import 'package:craftybay/features/categories/model/category_model.dart';
 import 'package:craftybay/features/common/controllers/main_bottom_nav_bar_controller.dart';
+import 'package:craftybay/features/products/data/models/product_model.dart';
+import 'package:craftybay/features/products/ui/controllers/popular_new_controller.dart';
+import 'package:craftybay/features/products/ui/controllers/popular_product_controller.dart';
+import 'package:craftybay/features/products/ui/controllers/popular_special_controller.dart';
+import 'package:craftybay/features/products/ui/controllers/productlist_controller.dart';
 import 'package:craftybay/features/products/ui/screens/product_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -52,19 +57,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.pushNamed(context, ProductListScreen.name);
                 },
               ),
-              _buildProductSection(),
+              _buildPopularProductSection(),
               const SizedBox(height: 16),
               SectionHeader(
                 title: context.localization.special,
                 onTapSeeAll: () {},
               ),
-              _buildProductSection(),
+              _buildSpecialProductSection(),
               const SizedBox(height: 16),
               SectionHeader(
                 title: context.localization.snew,
                 onTapSeeAll: () {},
               ),
-              _buildProductSection(),
+              _buildNewProductSection(),
             ],
           ),
         ),
@@ -72,19 +77,82 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildProductSection() {
-    return const SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: const Row(
-        children: [
-         /* ProductCard(),
-          ProductCard(),
-          ProductCard(),
-          ProductCard(),
-          ProductCard(),*/
-        ],
-      ),
-    );
+  Widget _buildSpecialProductSection() {
+    return GetBuilder<SpecialProductController>(builder: (controller) {
+      if (controller.isLoading) {
+        return const SizedBox(
+          height: 100,
+          child: CenteredCircularProgressbar(),
+        );
+      }
+
+      List<ProductModel> list = controller.productList.length > 10
+          ? controller.productList.sublist(0, 10)
+          : controller.productList;
+
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: list.map(
+            (e) {
+              return ProductCard(productModel: e);
+            },
+          ).toList(),
+        ),
+      );
+    });
+  }
+
+  Widget _buildPopularProductSection() {
+    return GetBuilder<PopularProductController>(builder: (controller) {
+      if (controller.isLoading) {
+        return const SizedBox(
+          height: 100,
+          child: CenteredCircularProgressbar(),
+        );
+      }
+
+      List<ProductModel> list = controller.productList.length > 10
+          ? controller.productList.sublist(0, 10)
+          : controller.productList;
+
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: list.map(
+            (e) {
+              return ProductCard(productModel: e);
+            },
+          ).toList(),
+        ),
+      );
+    });
+  }
+
+  Widget _buildNewProductSection() {
+    return GetBuilder<NewProductController>(builder: (controller) {
+      if (controller.isLoading) {
+        return const SizedBox(
+          height: 100,
+          child: CenteredCircularProgressbar(),
+        );
+      }
+
+      List<ProductModel> list = controller.productList.length > 10
+          ? controller.productList.sublist(0, 10)
+          : controller.productList;
+
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: list.map(
+            (e) {
+              return ProductCard(productModel: e);
+            },
+          ).toList(),
+        ),
+      );
+    });
   }
 
   Widget _buildCategorySection() {

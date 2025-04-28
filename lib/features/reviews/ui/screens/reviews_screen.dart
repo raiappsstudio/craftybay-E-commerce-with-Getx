@@ -1,18 +1,32 @@
 import 'package:craftybay/app/app_colors.dart';
+import 'package:craftybay/features/reviews/ui/controllers/review_list_controller.dart';
 import 'package:craftybay/features/reviews/ui/screens/create_review_screen.dart';
 import 'package:flutter/material.dart';
 import '../widgets/review_item.dart';
 
 class ReviewsScreen extends StatefulWidget {
-  const ReviewsScreen({super.key});
+  const ReviewsScreen({super.key, required this.productId});
 
   static const String name = "/reviews";
+
+  final String productId;
 
   @override
   State<ReviewsScreen> createState() => _ReviewsScreenState();
 }
 
 class _ReviewsScreenState extends State<ReviewsScreen> {
+
+  final ReviewListController _reviewListController = ReviewListController();
+
+
+  @override
+  void initState() {
+    super.initState();
+    _reviewListController.getProductReview(widget.productId);
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,9 +37,9 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
         children: [
           Expanded(
             child: ListView.builder(
-                itemCount: 10,
+                itemCount: widget.productId.length,
                 itemBuilder: (context, index) {
-                  return ReviewsItem();
+                  return ReviewsItem(productId: widget.productId);
                 }),
           ),
           _TotalReviewandCreateButton(context)
@@ -33,9 +47,6 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
       ),
     );
   }
-
-
-
 
 
 
@@ -54,7 +65,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Total Review(985)',
+                  "Total Review(${widget.productId.length})",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                 ),
                 FloatingActionButton(

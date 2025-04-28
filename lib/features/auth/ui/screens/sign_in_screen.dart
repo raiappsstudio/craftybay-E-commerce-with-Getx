@@ -133,6 +133,8 @@ class _SignInScreenState extends State<SignInScreen> {
 
       final isSuccess = await _signInController.signIn(signInRequestModel);
 
+      print(isSuccess);
+
       if (isSuccess) {
         showSnackBarMessage(context, "Sign In Successfully");
         Navigator.pushNamedAndRemoveUntil(context, MainBottomNavBarScreen.name, (value) => false,

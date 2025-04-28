@@ -39,11 +39,13 @@ class AppRoutes{
      final category = settings.arguments as CategoryModel;
      route =  ProductListScreen(category: category);
    }else if (settings.name == ProductDetailsScreen.name){
-     route =  const ProductDetailsScreen();
+     String productId = settings.arguments as String;
+     route = ProductDetailsScreen(productId: productId);
    }else if (settings.name == CartListScreen.name){
      route =  const CartListScreen();
    }else if (settings.name == ReviewsScreen.name){
-     route =  const ReviewsScreen();
+     String productId = settings.arguments as String;
+     route =   ReviewsScreen(productId: productId,);
    }else if (settings.name == CreateReviewScreen.name){
      route =  const CreateReviewScreen();
    }else if (settings.name == VerifyOtpScreen.name){

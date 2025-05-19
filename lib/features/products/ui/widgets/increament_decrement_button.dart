@@ -12,7 +12,7 @@ final Function(int) onChange;
 
 class _IncreamentDecrementButtonState extends State<IncreamentDecrementButton> {
 
-  int count = 0;
+  int count = 1;
 
 
   @override

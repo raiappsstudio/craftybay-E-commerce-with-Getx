@@ -34,7 +34,7 @@ class SignInController extends GetxController {
           UserModel.fromJson(response.responseData!['data']['user']);
       //save User Token
       String accessToken = response.responseData!['data']['token'];
-      Get.find<AuthController>().saveUserData(accessToken, userModel);
+      await Get.find<AuthController>().saveUserData(accessToken, userModel);
 
     } else {
       _errorMessage = response.errorMessage;

@@ -1,6 +1,7 @@
 import 'package:craftybay/app/app_colors.dart';
 import 'package:craftybay/core/widgets/centered_circular_progressbar.dart';
 import 'package:craftybay/core/widgets/show_snack_bar_message.dart';
+import 'package:craftybay/features/auth/ui/controllers/auth_controller.dart';
 import 'package:craftybay/features/common/controllers/add_to_cart_controller.dart';
 import 'package:craftybay/features/products/ui/controllers/product_details_controller.dart';
 import 'package:craftybay/features/products/ui/controllers/productlist_controller.dart';
@@ -11,6 +12,8 @@ import 'package:craftybay/features/products/ui/widgets/size_picker.dart';
 import 'package:craftybay/features/reviews/ui/screens/reviews_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../auth/ui/screens/sign_in_screen.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({super.key, required this.productId});
@@ -36,6 +39,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   void initState() {
     super.initState();
     _productDetailsController.getProductDetails(widget.productId);
+    //_addToCartController.addToCart(widget.productId);
   }
 
   @override
@@ -104,7 +108,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                               TextButton(
                                                   onPressed: () {
                                                     Navigator.pushNamed(context,
-                                                        ReviewsScreen.name,arguments: widget.productId);
+                                                        ReviewsScreen.name,
+                                                        arguments:
+                                                            widget.productId);
                                                   },
                                                   child: const Text('Review')),
                                               Card(
@@ -131,25 +137,45 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                           }),
                                         ],
                                       ),
-                                      const SizedBox(height: 16),
-                                      ColorPicker(
-                                          colors: controller.product.colors,
-                                          onChange: (selectedColor) {
-                                            setState(() {
-                                              _selectedColor = selectedColor;
-                                            });
-                                          }),
-                                      const SizedBox(height: 16),
-                                      SizePicker(
-                                          size: controller.product.sizes,
-                                          onChange: (selectedSize) {
-                                            setState(() {
-                                              _selectedSize = selectedSize;
-                                            });
+                                      if (controller.product.colors.isNotEmpty)
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const SizedBox(height: 16),
 
-                                          }),
+                                            ColorPicker(
+                                              colors: controller.product.colors,
+                                              onChange: (selectedColor) {
+                                                setState(() {
+                                                  _selectedColor = selectedColor;
+                                                });
+                                              },
+                                            ),
+
+                                          ],
+                                        ),
+                                      Visibility(
+                                        visible:
+                                            controller.product.sizes.isNotEmpty,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const SizedBox(height: 16),
+                                            SizePicker(
+                                              sizes: controller.product.sizes,
+                                              onChange: (selectedSize) {
+                                                setState(() {
+                                                  _selectedSize = selectedSize;
+                                                });
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                       const SizedBox(height: 16),
-                                      Text(
+                                      const Text(
                                         'Description',
                                         style: TextStyle(
                                             fontSize: 18,
@@ -196,16 +222,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Column(
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Price',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               Text(
-                '\$1000',
-                style: TextStyle(
+                '\$${_productDetailsController.product.currentPrice}',
+                style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                     color: AppColors.themeColor),
@@ -215,49 +241,46 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           SizedBox(
             width: 140,
             child: GetBuilder(
-              init: _addToCartController,
-              builder: (controller) {
+                init: _addToCartController,
+                builder: (controller) {
+                  return Visibility(
+                    visible: controller.inProgress == false,
+                    replacement: const CenteredCircularProgressbar(),
+                    child: ElevatedButton(
+                        onPressed: () async {
+                          if (isColorAvailable && _selectedColor == null) {
+                            showSnackBarMessage(
+                                context, 'Please select your color', true);
+                            return;
+                          }
 
-                return Visibility(
-                  visible: controller.inProgress == false,
-                  replacement: const CenteredCircularProgressbar(),
-                  child: ElevatedButton(
-                      onPressed: () async {
-                        if (isColorAvailable && _selectedColor == null) {
-                          showSnackBarMessage(context, 'Select Your color', true);
-                          return;
-                        }
-
-                        if (isSizeAvailable && _selectedSize == null) {
-                          showSnackBarMessage(context, 'Select your Size', true);
-                          return;
-                        }
-
-                        final bool isSuccess = await _addToCartController
-                            .addToCart(_productDetailsController.product.id);
-
-                        if (isSuccess) {
-                          showSnackBarMessage(context, 'Added to Cart');
-                        } else {
-                          showSnackBarMessage(
-                              context, _addToCartController.errorMessage!, true);
-                        }
+                          if (isSizeAvailable && _selectedSize == null) {
+                            showSnackBarMessage(
+                                context, 'Please select your size', true);
+                            return;
+                          }
 
 
 
+                          if (Get.find<AuthController>().isValidUser() ==
+                              false) {
+                            Get.to(() => const SignInScreen());
+                            return;
+                          }
 
+                          final bool isSuccess = await _addToCartController
+                              .addToCart(_productDetailsController.product.id);
 
-
-
-
-
-
-
-                      },
-                      child: Text('Add to Cart')),
-                );
-              }
-            ),
+                          if (isSuccess) {
+                            showSnackBarMessage(context, 'Added to cart');
+                          } else {
+                            showSnackBarMessage(context,
+                                _addToCartController.errorMessage!, true);
+                          }
+                        },
+                        child: Text('Add to Cart')),
+                  );
+                }),
           ),
         ],
       ),

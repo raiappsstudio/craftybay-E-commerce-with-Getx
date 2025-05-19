@@ -1,3 +1,4 @@
+import 'package:craftybay/features/wishlist/models/wishlist_model.dart';
 import 'package:flutter/material.dart';
 import '../../../../app/app_colors.dart';
 import '../../../../app/assets_path.dart';
@@ -5,8 +6,13 @@ import '../../../../app/assets_path.dart';
 
 class WishCard extends StatelessWidget {
   const WishCard({
-    super.key,
+    super.key, required this.wishlistModel,
   });
+
+
+  final WishlistModel wishlistModel;
+
+
 
   @override
   Widget build(BuildContext context) {

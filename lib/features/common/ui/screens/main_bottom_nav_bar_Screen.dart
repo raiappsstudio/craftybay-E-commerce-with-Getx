@@ -1,16 +1,14 @@
-import 'package:craftybay/features/categories/controller/category_controller.dart';
+
+import 'package:craftybay/features/cart/ui/screens/cart_list_screen.dart';
 import 'package:craftybay/features/categories/screens/category_list_sreen.dart';
-import 'package:craftybay/features/common/controllers/main_bottom_nav_bar_controller.dart';
-import 'package:craftybay/features/common/controllers/home_slider_controller.dart';
-import 'package:craftybay/features/products/ui/controllers/popular_new_controller.dart';
-import 'package:craftybay/features/products/ui/controllers/popular_product_controller.dart';
-import 'package:craftybay/features/products/ui/controllers/popular_special_controller.dart';
 import 'package:craftybay/features/wishlist/ui/screens/wish_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../cart/ui/screens/cart_list_screen.dart';
+import '../../../auth/ui/screens/sign_in_screen.dart';
+import '../../../categories/controller/category_controller.dart';
 import '../../../home/ui/screens/home_screen.dart';
+import '../../controllers/home_slider_controller.dart';
+import '../../controllers/main_bottom_nav_bar_controller.dart';
 
 class MainBottomNavBarScreen extends StatefulWidget {
   const MainBottomNavBarScreen({super.key});
@@ -32,15 +30,11 @@ class _MainBottomNavBarScreenState extends State<MainBottomNavBarScreen> {
   @override
   void initState() {
     super.initState();
-    Get.find<HomeSliderController>().getSliders();
-    Get.find<CategoryController>().getCategoryList();
-    Get.find<NewProductController>().getNewProductList();
-    Get.find<SpecialProductController>().getSpecialProductList();
-    Get.find<PopularProductController>().getPopularProductList();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.find<HomeSliderController>().getSliders();
+      Get.find<CategoryController>().getCategoryList();
+    });
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +48,13 @@ class _MainBottomNavBarScreenState extends State<MainBottomNavBarScreen> {
           builder: (controller) {
             return NavigationBar(
               selectedIndex: controller.selectedIndex,
-              onDestinationSelected: controller.changeIndex,
+              onDestinationSelected: (int index) {
+                if (controller.shouldNavigate(index)) {
+                  controller.changeIndex(index);
+                } else {
+                  Get.to(() => const SignInScreen());
+                }
+              },
               destinations: const [
                 NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
                 NavigationDestination(icon: Icon(Icons.category), label: 'Category'),

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../../app/app_urls.dart';
 import '../../../../core/network_caller/network_caller.dart';
+import '../../../auth/ui/controllers/auth_controller.dart';
 import '../../models/cart_item_model.dart';
 
 class CartListController extends GetxController {
@@ -29,6 +30,12 @@ class CartListController extends GetxController {
     bool isSuccess = false;
     _getCartListInProgress = true;
     update();
+
+    AuthController _auth = AuthController();
+
+    print(_auth.token);
+
+
     final NetworkResponse response = await Get.find<NetworkCaller>().getRequest(
       url: AppUrls.cartListUrl,
     );

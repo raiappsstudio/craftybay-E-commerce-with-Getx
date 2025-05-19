@@ -21,6 +21,8 @@ class WishListController extends GetxController {
     _wishListInProgress = true;
     update();
 
+
+
     final NetworkResponse response =
         await Get.find<NetworkCaller>().getRequest(url: AppUrls.wishListUrl);
 

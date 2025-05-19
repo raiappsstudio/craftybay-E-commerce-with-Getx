@@ -31,10 +31,15 @@ class NetworkCaller {
         url += '$key=${queryParams![key]}&';
       }
 
+      AuthController _auth = AuthController();
+
       Uri uri = Uri.parse(url);
       Map<String, String> headers = {
         'token': getx.Get.find<AuthController>().token ?? ''
       };
+
+      print(_auth.token);
+      print(headers);
 
       _logRequest(url, headers);
       Response response = await get(uri, headers: {});

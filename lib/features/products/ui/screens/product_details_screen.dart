@@ -10,6 +10,7 @@ import 'package:craftybay/features/products/ui/widgets/increament_decrement_butt
 import 'package:craftybay/features/products/ui/widgets/product_image_carousel_slider.dart';
 import 'package:craftybay/features/products/ui/widgets/size_picker.dart';
 import 'package:craftybay/features/reviews/ui/screens/reviews_screen.dart';
+import 'package:craftybay/features/wishlist/ui/controllers/add_wishlist_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -31,6 +32,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       Get.put(ProductDetailsController());
 
   final AddToCartController _addToCartController = AddToCartController();
+  final AddWishlistController _addWishlistController = AddWishlistController();
 
   String? _selectedColor;
   String? _selectedSize;
@@ -110,23 +112,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                     Navigator.pushNamed(context,
                                                         ReviewsScreen.name,
                                                         arguments:
-                                                            widget.productId);
+                                                            _productDetailsController
+                                                                .product.id);
                                                   },
                                                   child: const Text('Review')),
-                                              Card(
-                                                color: AppColors.themeColor,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(4),
-                                                ),
-                                                child: const Padding(
-                                                  padding: EdgeInsets.all(2.0),
-                                                  child: Icon(
-                                                    Icons.favorite_border,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              ),
+
+                                              //=========================================
+                                              _AddtoWishList(context),
                                             ],
                                           ),
 
@@ -143,37 +135,22 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             const SizedBox(height: 16),
-
                                             ColorPicker(
                                               colors: controller.product.colors,
                                               onChange: (selectedColor) {
                                                 setState(() {
-                                                  _selectedColor = selectedColor;
+                                                  _selectedColor =
+                                                      selectedColor;
                                                 });
                                               },
                                             ),
+                                          ],
+                                        ),
 
-                                          ],
-                                        ),
-                                      Visibility(
-                                        visible:
-                                            controller.product.sizes.isNotEmpty,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const SizedBox(height: 16),
-                                            SizePicker(
-                                              sizes: controller.product.sizes,
-                                              onChange: (selectedSize) {
-                                                setState(() {
-                                                  _selectedSize = selectedSize;
-                                                });
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ),
+                                      ///=============Size picker=====================
+                                      _SizePicker(controller),
+
+                                      ///=============Size picker=====================
                                       const SizedBox(height: 16),
                                       const Text(
                                         'Description',
@@ -207,6 +184,60 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               ],
             );
           }),
+    );
+  }
+
+  Widget _SizePicker(ProductDetailsController controller) {
+    return Visibility(
+      visible: controller.product.sizes.isNotEmpty,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 16),
+          SizePicker(
+            sizes: controller.product.sizes,
+            onChange: (selectedSize) {
+              setState(() {
+                _selectedSize = selectedSize;
+              });
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _AddtoWishList(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        if (Get.find<AuthController>().isValidUser() == false) {
+          Get.to(() => const SignInScreen());
+          return;
+        }
+
+        final bool isSuccess = await _addWishlistController.AddwishList(
+            _productDetailsController.product.id);
+
+        if (isSuccess) {
+          showSnackBarMessage(context, 'Added to Wish List');
+        } else {
+          showSnackBarMessage(
+              context, _addToCartController.errorMessage!, true);
+        }
+      },
+      child: Card(
+        color: AppColors.themeColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: const Padding(
+          padding: EdgeInsets.all(2.0),
+          child: Icon(
+            Icons.favorite_border,
+            color: Colors.white,
+          ),
+        ),
+      ),
     );
   }
 
@@ -259,8 +290,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 context, 'Please select your size', true);
                             return;
                           }
-
-
 
                           if (Get.find<AuthController>().isValidUser() ==
                               false) {

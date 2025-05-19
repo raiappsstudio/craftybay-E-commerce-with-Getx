@@ -21,7 +21,6 @@ class CartListController extends GetxController {
   String? get removeFromCartErrorMessage => _removeFromCartErrorMessage;
 
   List<CartItemModel> _cartItemList = [];
-
   List<CartItemModel> get cartItemList => _cartItemList;
 
 

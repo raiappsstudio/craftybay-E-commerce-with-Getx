@@ -12,9 +12,11 @@ import 'package:craftybay/features/products/ui/controllers/popular_product_contr
 import 'package:craftybay/features/products/ui/controllers/popular_special_controller.dart';
 import 'package:craftybay/features/products/ui/controllers/product_details_controller.dart';
 import 'package:craftybay/features/products/ui/controllers/productlist_controller.dart';
+import 'package:craftybay/features/reviews/ui/controllers/review_list_controller.dart';
 import 'package:get/get.dart';
 
 import '../features/cart/ui/controller/cart_list_controller.dart';
+import '../features/reviews/ui/controllers/create_review_controller.dart';
 
 class ControllerBinder extends Bindings {
   @override
@@ -34,6 +36,8 @@ class ControllerBinder extends Bindings {
     Get.put(AuthController());
     Get.put(CartListController());
     Get.put(AddToCartController());
+    Get.put(ReviewListController());
+    Get.put(CreateReviewController());
    // Get.put(()=> VerifyOtpController());//laze put
   }
 }

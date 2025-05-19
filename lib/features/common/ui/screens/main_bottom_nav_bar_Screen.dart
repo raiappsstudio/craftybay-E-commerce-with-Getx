@@ -1,6 +1,9 @@
 
 import 'package:craftybay/features/cart/ui/screens/cart_list_screen.dart';
 import 'package:craftybay/features/categories/screens/category_list_sreen.dart';
+import 'package:craftybay/features/products/ui/controllers/popular_new_controller.dart';
+import 'package:craftybay/features/products/ui/controllers/popular_product_controller.dart';
+import 'package:craftybay/features/products/ui/controllers/popular_special_controller.dart';
 import 'package:craftybay/features/wishlist/ui/screens/wish_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,6 +33,9 @@ class _MainBottomNavBarScreenState extends State<MainBottomNavBarScreen> {
   @override
   void initState() {
     super.initState();
+    Get.find<NewProductController>().getNewProductList();
+    Get.find<PopularProductController>().getPopularProductList();
+    Get.find<SpecialProductController>().getSpecialProductList();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Get.find<HomeSliderController>().getSliders();
       Get.find<CategoryController>().getCategoryList();

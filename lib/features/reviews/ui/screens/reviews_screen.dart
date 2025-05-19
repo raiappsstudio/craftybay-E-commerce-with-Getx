@@ -2,6 +2,11 @@ import 'package:craftybay/app/app_colors.dart';
 import 'package:craftybay/features/reviews/ui/controllers/review_list_controller.dart';
 import 'package:craftybay/features/reviews/ui/screens/create_review_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
+import '../../../auth/ui/controllers/auth_controller.dart';
+import '../../../auth/ui/screens/sign_in_screen.dart';
 import '../widgets/review_item.dart';
 
 class ReviewsScreen extends StatefulWidget {
@@ -16,16 +21,13 @@ class ReviewsScreen extends StatefulWidget {
 }
 
 class _ReviewsScreenState extends State<ReviewsScreen> {
-
   final ReviewListController _reviewListController = ReviewListController();
-
 
   @override
   void initState() {
     super.initState();
     _reviewListController.getProductReview(widget.productId);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +38,17 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
-                itemCount: widget.productId.length,
-                itemBuilder: (context, index) {
-                  return ReviewsItem(productId: widget.productId);
-                }),
+            child: GetBuilder<ReviewListController>(
+              builder: (controller) {
+                return ListView.builder(
+                  itemCount: controller.reviewsList.length,
+                  itemBuilder: (context, index) {
+                    return ReviewsItem(
+                        reviewsModel: controller.reviewsList[index]);
+                  },
+                );
+              },
+            ),
           ),
           _TotalReviewandCreateButton(context)
         ],
@@ -48,14 +56,11 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
     );
   }
 
-
-
-
   Widget _TotalReviewandCreateButton(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
           color: AppColors.themeColor.withOpacity(0.1),
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
               topRight: Radius.circular(10), topLeft: Radius.circular(10))),
       child: Column(
         children: [
@@ -65,12 +70,19 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Total Review(${widget.productId.length})",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  "Total Review(${_reviewListController.reviewsList.length})",
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.w600),
                 ),
                 FloatingActionButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, CreateReviewScreen.name);
+                    if (Get.find<AuthController>().isValidUser() == false) {
+                      Get.to(() => const SignInScreen());
+                      return;
+                    }
+
+                    Navigator.pushNamed(context, CreateReviewScreen.name,
+                        arguments: widget.productId);
                   },
                   child: Icon(Icons.add),
                 )
@@ -82,4 +94,3 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
     );
   }
 }
-

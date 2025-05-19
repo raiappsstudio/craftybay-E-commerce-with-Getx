@@ -136,9 +136,10 @@ class _SignInScreenState extends State<SignInScreen> {
 
       if (isSuccess) {
         showSnackBarMessage(context, "Sign In Successfully");
+       // Navigator.pushNamedAndRemoveUntil(context, MainBottomNavBarScreen.name, (value) => false,);
+        Navigator.pop(context);
 
-        Navigator.pushNamedAndRemoveUntil(context, MainBottomNavBarScreen.name, (value) => false,
-        );
+
       } else {
         showSnackBarMessage(
             context, _signInController.errorMessage ?? "Sign in failed", true);

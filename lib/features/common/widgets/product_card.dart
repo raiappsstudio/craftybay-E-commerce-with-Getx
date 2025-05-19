@@ -75,7 +75,7 @@ class ProductCard extends StatelessWidget {
                               size: 18,
                               color: Colors.orange,
                             ),
-                            Text('4.4')
+                            Text('${productModel.rating}')
                           ],
                         ),
                         Card(

@@ -1,11 +1,12 @@
+import 'package:craftybay/features/reviews/data/models/reviews_model.dart';
 import 'package:flutter/material.dart';
 
 class ReviewsItem extends StatelessWidget {
   const ReviewsItem({
-    super.key, required this.productId,
+    super.key, required this.reviewsModel,
   });
 
-  final String productId;
+  final ReviewsModel reviewsModel;
 
 
   @override

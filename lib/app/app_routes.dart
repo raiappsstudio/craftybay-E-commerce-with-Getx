@@ -4,6 +4,8 @@ import 'package:craftybay/features/categories/model/category_model.dart';
 import 'package:craftybay/features/common/ui/screens/main_bottom_nav_bar_Screen.dart';
 import 'package:craftybay/features/home/ui/screens/home_screen.dart';
 import 'package:craftybay/features/products/ui/screens/product_details_screen.dart';
+import 'package:craftybay/features/reviews/data/models/create_review_model.dart';
+import 'package:craftybay/features/reviews/data/models/reviews_model.dart';
 import 'package:flutter/material.dart';
 
 import '../features/auth/ui/screens/sign_up_screen.dart';
@@ -45,7 +47,8 @@ class AppRoutes{
      String productId = settings.arguments as String;
      route =   ReviewsScreen(productId: productId,);
    }else if (settings.name == CreateReviewScreen.name){
-     route =  const CreateReviewScreen();
+     final reviewsModel = settings.arguments as ReviewsModel;
+     route = CreateReviewScreen(reviewsModel: reviewsModel);
    }else if (settings.name == VerifyOtpScreen.name){
      String email = settings.arguments as String;
      route =  VerifyOtpScreen(email: email);

@@ -3,17 +3,15 @@ import 'package:get/get.dart';
 
 import '../../../../app/app_urls.dart';
 import '../../../../core/network_caller/network_caller.dart';
-import '../../../auth/ui/controllers/auth_controller.dart';
 import '../../models/cart_item_model.dart';
 
 class CartListController extends GetxController {
   bool _getCartListInProgress = false;
-  bool get getCartListInProgress => _getCartListInProgress;
 
   bool _removeFromCartListInProgress = false;
-  bool get removeFromCartListInProgress => _removeFromCartListInProgress;
 
   String? _errorMessage;
+
   String? get errorMessage => _errorMessage;
 
   String? _removeFromCartErrorMessage;
@@ -21,20 +19,17 @@ class CartListController extends GetxController {
   String? get removeFromCartErrorMessage => _removeFromCartErrorMessage;
 
   List<CartItemModel> _cartItemList = [];
+
   List<CartItemModel> get cartItemList => _cartItemList;
 
+  bool get getCartListInProgress => _getCartListInProgress;
 
+  bool get removeFromCartListInProgress => _removeFromCartListInProgress;
 
   Future<bool> getCartList() async {
     bool isSuccess = false;
     _getCartListInProgress = true;
     update();
-
-    AuthController _auth = AuthController();
-
-    print(_auth.token);
-
-
     final NetworkResponse response = await Get.find<NetworkCaller>().getRequest(
       url: AppUrls.cartListUrl,
     );

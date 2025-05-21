@@ -42,7 +42,7 @@ class NetworkCaller {
       print(headers);
 
       _logRequest(url, headers);
-      Response response = await get(uri, headers: {});
+      Response response = await get(uri, headers: headers);
       _logResponse(url, response);
 
       final decodedResponse = jsonDecode(response.body);

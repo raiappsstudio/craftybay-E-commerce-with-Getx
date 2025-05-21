@@ -27,7 +27,7 @@ class _MainBottomNavBarScreenState extends State<MainBottomNavBarScreen> {
     const HomeScreen(),
     const CategoryListSreen(),
     const CartListScreen(),
-    const WishListScreen(),
+    const WishListScreen()
   ];
 
   @override

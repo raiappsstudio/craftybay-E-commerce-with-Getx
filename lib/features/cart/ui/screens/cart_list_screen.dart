@@ -1,6 +1,8 @@
 import 'package:craftybay/core/widgets/centered_circular_progressbar.dart';
+import 'package:craftybay/features/cart/ui/screens/payment.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../../../app/app_colors.dart';
 import '../../../common/controllers/main_bottom_nav_bar_controller.dart';
 import '../../models/cart_item_model.dart';
@@ -83,10 +85,10 @@ class _CartListScreenState extends State<CartListScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Total Price'),
+               Text('Total Price'),
               Text(
                 '\$${_cartListController.totalPrice}',
-                style: const TextStyle(
+                style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                     color: AppColors.themeColor),
@@ -97,7 +99,7 @@ class _CartListScreenState extends State<CartListScreen> {
             width: 140,
             child: ElevatedButton(
               onPressed: () async {
-               /* Navigator.pushNamed(
+                /*Navigator.pushNamed(
                   context,
                   PaymentScreen.name,
                   arguments: _cartListController.totalPrice.toDouble(),

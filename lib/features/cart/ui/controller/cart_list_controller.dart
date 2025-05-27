@@ -27,6 +27,7 @@ class CartListController extends GetxController {
   bool get removeFromCartListInProgress => _removeFromCartListInProgress;
 
   Future<bool> getCartList() async {
+    _cartItemList = [];
     bool isSuccess = false;
     _getCartListInProgress = true;
     update();
@@ -39,6 +40,7 @@ class CartListController extends GetxController {
       for (Map<String, dynamic> json in response.responseData!['data']
       ['results']) {
         list.add(CartItemModel.fromJson(json));
+        _cartItemList.addAll(list);
       }
       _cartItemList = list;
       isSuccess = true;
@@ -88,4 +90,8 @@ class CartListController extends GetxController {
     }
     return total;
   }
+
+
+
+
 }

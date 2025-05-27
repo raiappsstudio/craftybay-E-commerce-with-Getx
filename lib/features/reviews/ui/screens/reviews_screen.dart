@@ -41,7 +41,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
             child: GetBuilder<ReviewListController>(
               builder: (controller) {
                 return ListView.builder(
-                  itemCount: controller.reviewsList.length,
+                  itemCount: 5, //controller.reviewsList.length,
                   itemBuilder: (context, index) {
                     return ReviewsItem(
                         reviewsModel: controller.reviewsList[index]);
@@ -70,7 +70,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Total Review(${_reviewListController.reviewsList.length})",
+                  "Total Review(${_reviewListController.reviewsList.length ?? 0})",
                   style: const TextStyle(
                       fontSize: 18, fontWeight: FontWeight.w600),
                 ),

@@ -37,7 +37,7 @@ class ControllerBinder extends Bindings {
     Get.put(AuthController());
     Get.put(CartListController());
     Get.put(AddToCartController());
-    Get.put(ReviewListController());
+    Get.put(() => ReviewListController());
     Get.put(CreateReviewController());
     Get.put(WishListController());
    // Get.put(()=> VerifyOtpController());//laze put

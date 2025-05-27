@@ -215,10 +215,8 @@ class NetworkCaller {
         'content-type': 'application/json',
         'token': getx.Get.find<AuthController>().token ?? ''
       };
-      _logRequest(
-        url,
-        headers,
-      );
+
+      _logRequest(url, headers);
 
       Response response =
           await delete(uri, headers: headers, body: jsonEncode(body));

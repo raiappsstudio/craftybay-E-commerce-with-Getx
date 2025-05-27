@@ -1,8 +1,10 @@
 import 'package:craftybay/core/widgets/centered_circular_progressbar.dart';
-import 'package:craftybay/features/cart/ui/screens/payment.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:flutter_sslcommerz/model/SSLCSdkType.dart';
+import 'package:flutter_sslcommerz/model/SSLCommerzInitialization.dart';
+import 'package:flutter_sslcommerz/model/SSLCurrencyType.dart';
+import 'package:flutter_sslcommerz/sslcommerz.dart';
 import '../../../../app/app_colors.dart';
 import '../../../common/controllers/main_bottom_nav_bar_controller.dart';
 import '../../models/cart_item_model.dart';
@@ -22,6 +24,7 @@ class _CartListScreenState extends State<CartListScreen> {
   void initState() {
     super.initState();
     _cartListController.getCartList();
+    print(" this is cart item number: ${_cartListController.cartItemList}");
   }
 
   @override
@@ -104,6 +107,7 @@ class _CartListScreenState extends State<CartListScreen> {
                   PaymentScreen.name,
                   arguments: _cartListController.totalPrice.toDouble(),
                 );*/
+                await paymentGetwayIntrigration(_cartListController.totalPrice.toDouble());
               },
               child: const Text('Checkout'),
             ),
@@ -112,4 +116,31 @@ class _CartListScreenState extends State<CartListScreen> {
       ),
     );
   }
+
+  Future<void> paymentGetwayIntrigration(double totalPrice) async {
+    Sslcommerz sslcommerz = Sslcommerz(
+        initializer: SSLCommerzInitialization(
+          //   ipn_url: "www.ipnurl.com",
+            multi_card_name: "visa,master,bkash",
+            currency: SSLCurrencyType.BDT,
+            product_category: "Food",
+            sdkType: SSLCSdkType.TESTBOX,
+            store_id: "topwa6835dec9a414d",
+            store_passwd: "topwa6835dec9a414d@ssl",
+            total_amount: totalPrice,
+            tran_id: "custom_transaction_idxxxteeeesssxxxxxx"));
+
+    final response = await sslcommerz.payNow();
+
+    if (response.status == 'VALID') {
+      print('Payment successfully');
+    } else if (response.status == 'Closed') {
+      print('Payment closed');
+    } else if (response.status == 'FAILED') {
+      print('Payment Failed');
+    }
+
+
+  }
+
 }

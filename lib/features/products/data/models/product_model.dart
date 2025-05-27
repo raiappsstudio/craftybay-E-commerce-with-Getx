@@ -71,13 +71,9 @@ class ProductModel {
 
 */
 
-
-import 'package:craftybay/features/products/data/models/brand_model.dart';
-
 class ProductModel {
   final String id;
   final String title;
-  final Brand brand;
   final int regularPrice;
   final int currentPrice;
   final double rating;
@@ -90,7 +86,6 @@ class ProductModel {
   ProductModel(
       {required this.id,
         required this.title,
-        required this.brand,
         required this.regularPrice,
         required this.currentPrice,
         required this.rating,
@@ -102,14 +97,13 @@ class ProductModel {
       });
 
   factory ProductModel.fromJson(Map<String, dynamic> jsonData) {
-    List<dynamic> photoList = jsonData['photos']??[];
-    List<dynamic> sizeList = jsonData['sizes'];
-    List<dynamic> colorList = jsonData['colors'];
+    List<dynamic> photoList = jsonData['photos'] ?? [];
+    List<dynamic> sizeList = jsonData['sizes'] ?? [];
+    List<dynamic> colorList = jsonData['colors'] ?? [];
 
     return ProductModel(
       id: jsonData['_id'],
       title: jsonData['title'],
-      brand: Brand.fromJson(jsonData['brand']),
       regularPrice: jsonData['regular_price'] ?? 0,
       currentPrice: jsonData['current_price'],
       rating: jsonData['rating'] ?? 0.0,
@@ -117,7 +111,7 @@ class ProductModel {
       sizes: List<String>.from(sizeList),
       colors: List<String>.from(colorList),
       availableQuantity: jsonData['quantity'],
-      description: jsonData['description'],
+      description: jsonData['description'] ?? '',
     );
   }
 }

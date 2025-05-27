@@ -55,8 +55,8 @@ class _CartItemCardState extends State<CartItemCard> {
                             ),
                             Row(
                               children: [
-                                Text('Color: ${widget.cartItem.color}'),
-                                Text('Size: ${widget.cartItem.size}'),
+                                /*Text('Color: ${widget.cartItem.}'),
+                                Text('Size: ${widget.cartItem.size}'),*/
                               ],
                             ),
                           ],

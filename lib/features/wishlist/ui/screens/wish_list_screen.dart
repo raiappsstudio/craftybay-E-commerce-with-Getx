@@ -51,7 +51,7 @@ class _WishListScreenState extends State<WishListScreen> {
                         // <-- use controller, not new instance
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
+                          crossAxisCount: 2,
                           mainAxisSpacing: 4,
                           crossAxisSpacing: 0,
                         ),
